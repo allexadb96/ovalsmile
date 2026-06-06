@@ -1,0 +1,327 @@
+/* ── Ovalsmile Custom Login Page ─────────────────────────────────────────── */
+
+:root {
+  --blue:       #A2C2E8;
+  --blue-light: #C8DDEF;
+  --beige:      #F4EDE3;
+  --beige-mid:  #E8DDD0;
+  --beige-dark: #D5C9BB;
+  --navy:       #1B3A6B;
+  --navy-dark:  #112951;
+  --slate:      #111111;
+  --font:       'Plus Jakarta Sans', sans-serif;
+}
+
+/* ── Page Background ────────────────────────────────────────────────────── */
+html,
+body.login {
+  font-family: var(--font) !important;
+  background: radial-gradient(ellipse at 70% 20%, var(--beige) 0%, var(--beige-mid) 50%, var(--beige-dark) 100%) !important;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Decorative blurred circles */
+body.login::before,
+body.login::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+body.login::before {
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(162,194,232,.45) 0%, transparent 70%);
+  top: -140px;
+  right: -120px;
+}
+body.login::after {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(27,58,107,.12) 0%, transparent 70%);
+  bottom: -100px;
+  left: -80px;
+}
+
+/* ── Brand Header (injected above form) ─────────────────────────────────── */
+.ovalsmile-login-brand {
+  text-align: center;
+  padding-top: 56px;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.os-login-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 4px 24px rgba(27,58,107,.15), 0 1px 4px rgba(0,0,0,.06);
+  margin-bottom: 14px;
+}
+
+.os-login-wordmark {
+  font-size: 1.65rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 8px;
+  color: var(--slate);
+}
+.os-thin  { font-weight: 200; }
+.os-bold  { font-weight: 800; }
+
+.os-login-tagline {
+  font-size: .82rem;
+  color: rgba(17,17,17,.5);
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ── Hide native WP logo h1 entirely ────────────────────────────────────── */
+#login h1 {
+  display: none !important;
+}
+
+/* ── #login wrapper ─────────────────────────────────────────────────────── */
+#login {
+  width: 380px !important;
+  padding: 0 !important;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 480px) {
+  #login {
+    width: calc(100% - 32px) !important;
+  }
+  .ovalsmile-login-brand {
+    padding-top: 36px;
+  }
+  #loginform,
+  #lostpasswordform,
+  #registerform {
+    padding: 28px 20px !important;
+  }
+}
+
+/* ── The white card ─────────────────────────────────────────────────────── */
+#loginform,
+#lostpasswordform,
+#registerform {
+  background: rgba(255,255,255,.82) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255,255,255,.9) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 8px 48px rgba(27,58,107,.12), 0 1px 3px rgba(0,0,0,.05) !important;
+  padding: 36px !important;
+  margin-top: 0 !important;
+}
+
+/* ── Labels ─────────────────────────────────────────────────────────────── */
+#loginform label,
+#lostpasswordform label,
+#registerform label {
+  font-family: var(--font) !important;
+  font-size: .78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .04em !important;
+  text-transform: uppercase !important;
+  color: rgba(17,17,17,.45) !important;
+  margin-bottom: 6px !important;
+  display: block !important;
+}
+
+/* ── Inputs ─────────────────────────────────────────────────────────────── */
+#loginform input[type="text"],
+#loginform input[type="password"],
+#loginform input[type="email"],
+#lostpasswordform input[type="text"],
+#lostpasswordform input[type="email"],
+#registerform input[type="text"],
+#registerform input[type="email"] {
+  font-family: var(--font) !important;
+  font-size: .92rem !important;
+  font-weight: 500 !important;
+  width: 100% !important;
+  padding: 13px 16px !important;
+  border: 1.5px solid rgba(17,17,17,.1) !important;
+  border-radius: 12px !important;
+  background: rgba(255,255,255,.7) !important;
+  color: var(--slate) !important;
+  transition: border-color .2s, box-shadow .2s !important;
+  box-shadow: none !important;
+  outline: none !important;
+  margin-top: 0 !important;
+}
+
+#loginform input[type="text"]:focus,
+#loginform input[type="password"]:focus,
+#loginform input[type="email"]:focus,
+#lostpasswordform input[type="text"]:focus,
+#lostpasswordform input[type="email"]:focus,
+#registerform input[type="text"]:focus,
+#registerform input[type="email"]:focus {
+  border-color: var(--navy) !important;
+  box-shadow: 0 0 0 3px rgba(27,58,107,.1) !important;
+  background: #fff !important;
+}
+
+/* ── Remember Me checkbox ───────────────────────────────────────────────── */
+.forgetmenot {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+.forgetmenot label {
+  font-size: .82rem !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  color: rgba(17,17,17,.55) !important;
+  cursor: pointer !important;
+}
+.forgetmenot input[type="checkbox"] {
+  width: 16px !important;
+  height: 16px !important;
+  accent-color: var(--navy) !important;
+  cursor: pointer !important;
+}
+
+/* ── Submit Button ──────────────────────────────────────────────────────── */
+#loginform .submit,
+#lostpasswordform .submit,
+#registerform .submit {
+  margin-top: 8px !important;
+  padding: 0 !important;
+}
+
+#wp-submit,
+#lostpasswordform .submit input[type="submit"],
+#registerform .submit input[type="submit"] {
+  font-family: var(--font) !important;
+  width: 100% !important;
+  background: var(--navy) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 14px 28px !important;
+  font-size: .92rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  cursor: pointer !important;
+  transition: transform .2s, box-shadow .2s, background .2s !important;
+  box-shadow: 0 4px 18px rgba(27,58,107,.3) !important;
+  height: auto !important;
+  line-height: 1.4 !important;
+}
+#wp-submit:hover,
+#lostpasswordform .submit input[type="submit"]:hover,
+#registerform .submit input[type="submit"]:hover {
+  background: var(--navy-dark) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 8px 28px rgba(27,58,107,.4) !important;
+}
+#wp-submit:active {
+  transform: translateY(0) !important;
+}
+
+/* ── Error / Info Messages ──────────────────────────────────────────────── */
+#login_error,
+.message,
+.updated {
+  font-family: var(--font) !important;
+  font-size: .82rem !important;
+  border-radius: 12px !important;
+  border: none !important;
+  padding: 12px 16px !important;
+  margin-bottom: 16px !important;
+}
+#login_error {
+  background: rgba(220,53,69,.08) !important;
+  color: #b02a37 !important;
+  border-left: 3px solid #dc3545 !important;
+  border-radius: 12px !important;
+}
+.message,
+.updated {
+  background: rgba(27,58,107,.07) !important;
+  color: var(--navy) !important;
+  border-left: 3px solid var(--navy) !important;
+  border-radius: 12px !important;
+}
+
+/* ── Nav / Back links ───────────────────────────────────────────────────── */
+#nav,
+#backtoblog {
+  text-align: center !important;
+  padding: 12px 0 4px !important;
+}
+#nav a,
+#backtoblog a {
+  font-family: var(--font) !important;
+  font-size: .82rem !important;
+  font-weight: 600 !important;
+  color: rgba(17,17,17,.45) !important;
+  text-decoration: none !important;
+  transition: color .2s !important;
+}
+#nav a:hover,
+#backtoblog a:hover {
+  color: var(--navy) !important;
+}
+
+/* ── Privacy policy link ────────────────────────────────────────────────── */
+.privacy-policy-page-link {
+  text-align: center !important;
+}
+.privacy-policy-page-link a {
+  font-family: var(--font) !important;
+  font-size: .78rem !important;
+  color: rgba(17,17,17,.35) !important;
+  text-decoration: none !important;
+}
+
+/* ── Password visibility toggle ─────────────────────────────────────────── */
+.wp-pwd {
+  position: relative !important;
+}
+.wp-hide-pw {
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  color: rgba(17,17,17,.35) !important;
+}
+.wp-hide-pw:hover {
+  color: var(--navy) !important;
+}
+.wp-hide-pw .dashicons {
+  font-size: 18px !important;
+  line-height: 1.4 !important;
+}
+
+/* ── p tags spacing inside forms ────────────────────────────────────────── */
+#loginform p,
+#lostpasswordform p,
+#registerform p {
+  margin-bottom: 18px !important;
+}
+#loginform p:last-of-type,
+#lostpasswordform p:last-of-type,
+#registerform p:last-of-type {
+  margin-bottom: 0 !important;
+}
+
+/* ── login-action row (remember + submit on same line) ──────────────────── */
+#loginform .submit { float: none !important; }
+.login-remember { float: none !important; }
