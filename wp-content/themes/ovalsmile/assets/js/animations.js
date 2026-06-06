@@ -273,7 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
       const dw = img.naturalWidth * scale, dh = img.naturalHeight * scale;
       const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
-      // Draw to offscreen first, then blit — atomic, no black flash
+      // Clear offscreen then draw — clearRect on offscreen is never visible,
+      // main canvas only gets updated via single atomic blit below
+      offCtx.clearRect(0, 0, cw, ch);
       offCtx.drawImage(img, dx, dy, dw, dh);
       vCtx.drawImage(offscreen, 0, 0);
     }
