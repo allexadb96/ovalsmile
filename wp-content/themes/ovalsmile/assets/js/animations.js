@@ -247,21 +247,35 @@ document.addEventListener('DOMContentLoaded', () => {
     let vLoaded   = 0;
     let vCurrent  = -1;
 
+    // Offscreen buffer — eliminates clear→draw black flash
+    const offscreen = document.createElement('canvas');
+    const offCtx    = offscreen.getContext('2d');
+
     function resizeVideoCanvas() {
-      videoCanvas.width  = videoCanvas.offsetWidth;
-      videoCanvas.height = videoCanvas.offsetHeight;
+      const w = videoCanvas.offsetWidth;
+      const h = videoCanvas.offsetHeight;
+      if (videoCanvas.width === w && videoCanvas.height === h) return; // skip if unchanged
+      videoCanvas.width  = w;
+      videoCanvas.height = h;
+      offscreen.width    = w;
+      offscreen.height   = h;
+      // Redraw current frame immediately after resize
+      if (vCurrent >= 0 && vFrames[vCurrent] && vFrames[vCurrent].complete) {
+        drawVideoFrame(vFrames[vCurrent]);
+      }
     }
     resizeVideoCanvas();
     window.addEventListener('resize', resizeVideoCanvas);
 
     function drawVideoFrame(img) {
-      if (!img) return;
+      if (!img || !img.complete || !img.naturalWidth) return;
       const cw = videoCanvas.width, ch = videoCanvas.height;
-      // cover: fill entire canvas
       const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
       const dw = img.naturalWidth * scale, dh = img.naturalHeight * scale;
-      vCtx.clearRect(0, 0, cw, ch);
-      vCtx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+      const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+      // Draw to offscreen first, then blit — atomic, no black flash
+      offCtx.drawImage(img, dx, dy, dw, dh);
+      vCtx.drawImage(offscreen, 0, 0);
     }
 
     // Preload all frames
